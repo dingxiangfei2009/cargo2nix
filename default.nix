@@ -40,7 +40,7 @@ let
 
   # choice of rustc
   rustChannel = pkgs.buildPackages.rustChannelOf {
-    channel = "1.37.0";
+    channel = "1.38.0";
   };
 
   inherit (rustChannel) cargo;

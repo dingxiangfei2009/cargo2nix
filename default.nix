@@ -103,7 +103,7 @@ let
   # - `release` (optional): Whether to enable release mode (equivalent to `cargo build --release`), defaults to `true`.
   rustPkgs = pkgs.rustBuilder.makePackageSet' {
     inherit rustPackageConfig;
-    rustChannel = "1.37";
+    rustChannel = "1.40";
     packageFun = import ./Cargo.nix;
   };
 in

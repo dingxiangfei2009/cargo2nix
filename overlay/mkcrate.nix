@@ -120,13 +120,24 @@ let
           ${featuresArg} ${optionalString (!hasDefaultFeature) "--no-default-features"}
       '';
 
+  commonNativeBuildInputs = [
+    buildPackages.autoconf
+    buildPackages.gnum4
+    buildPackages.pkg-config
+    cargo
+    rustc
+    stdenv
+    stdenv.cc
+    stdenv.cc.bintools
+  ];
+
   drvAttrs = {
     name = "crate-${name}-${version}${optionalString (compileMode != "build") "-${compileMode}"}";
     inherit src version meta;
     crateName = manifest.lib.name or (replaceChars ["-"] ["_"] name);
     buildInputs = sort (a: b: "${a}" < "${b}") (accessConfig "buildInputs" [ ]);
     nativeBuildInputs = sort (a: b: "${a}" < "${b}")
-      ([ cargo buildPackages.pkg-config ] ++ accessConfig "nativeBuildInputs" [ ]);
+      (commonNativeBuildInputs ++ accessConfig "nativeBuildInputs" [ ]);
     depsBuildBuild = [ buildPackages.buildPackages.stdenv.cc buildPackages.buildPackages.jq ];
 
     # Running the default `strip -S` command on Darwin corrupts the

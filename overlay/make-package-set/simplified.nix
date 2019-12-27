@@ -10,7 +10,7 @@ args@{
 }:
 let
   rustChannel = buildPackages.rustChannelOf {
-    channel = "1.37.0";
+    channel = "1.40.0";
   };
   inherit (rustChannel) cargo;
   rustc = rustChannel.rust.override {

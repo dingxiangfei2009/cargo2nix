@@ -126,7 +126,7 @@ let
     crateName = manifest.lib.name or (replaceChars ["-"] ["_"] name);
     buildInputs = sort (a: b: "${a}" < "${b}") (accessConfig "buildInputs" [ ]);
     nativeBuildInputs = sort (a: b: "${a}" < "${b}")
-      ([ cargo buildPackages.pkg-config ] ++ accessConfig "nativeBuildInputs" [ ]);
+      ([ rustc cargo buildPackages.pkg-config ] ++ accessConfig "nativeBuildInputs" [ ]);
     depsBuildBuild = [ buildPackages.buildPackages.stdenv.cc buildPackages.buildPackages.jq ];
 
     # Running the default `strip -S` command on Darwin corrupts the

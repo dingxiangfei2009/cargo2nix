@@ -10,12 +10,20 @@ args@{
 }:
 let
   rustChannel = buildPackages.rustChannelOf {
-    channel = "1.37.0";
+    channel = "1.40.0";
   };
   inherit (rustChannel) cargo;
   rustc = rustChannel.rust.override {
     targets = [
       (rustBuilder.rustLib.realHostTriple stdenv.targetPlatform)
+    ];
+    extensions = [
+      "rust-std"
+      "rls-preview"
+      "rust-analysis"
+      "rustfmt-preview"
+      "rust-src"
+      "clippy-preview"
     ];
   };
   extraArgs = builtins.removeAttrs args [ "stdenv" "pkgs" "buildPackages" "rustBuilder" "rustChannel" "packageFun" "rustPackageConfig" ];

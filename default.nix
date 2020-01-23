@@ -56,13 +56,15 @@ let
         nativeBuildInputs = {
           "registry+https://github.com/rust-lang/crates.io-index".curl-sys."*" = darwinFrameworks;
           "registry+https://github.com/rust-lang/crates.io-index".libgit2-sys."*" = darwinFrameworks;
+          unknown.cargo2nix."*" = with pkgs.buildPackages; [ autoconf pkg-config gnum4 ];
         };
         buildInputs = {
           "registry+https://github.com/rust-lang/crates.io-index".libgit2-sys."*" = [ pkgs.libiconv ];
           "registry+https://github.com/rust-lang/crates.io-index".cargo."*" = [ pkgs.libiconv ] ++ darwinFrameworks;
-          unknown.cargo2nix."*" = [ pkgs.libiconv ] ++ darwinFrameworks;
+          unknown.cargo2nix."*" = with pkgs; [ libiconv ] ++ darwinFrameworks;
         };
         environment = {
+          unknown."*".PROTOC = "${pkgs.protobuf}/bin/protoc";
           "registry+https://github.com/rust-lang/crates.io-index".openssl-sys."*" =
             let
               envize = s: builtins.replaceStrings ["-"] ["_"] (lib.toUpper s);
